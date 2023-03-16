@@ -62,7 +62,6 @@ def augment(x, y):
            A.RGBShift(p=0.1),
            A.Spatter(p=0.1),
            A.HorizontalFlip(p=0.15),
-           #A.VerticalFlip(p=0.2),
            A.Rotate(p=0.2, limit=20, interpolation=cv.INTER_NEAREST),
         ])
     augmented = aug(image=x, mask=y)
