@@ -126,6 +126,3 @@ if __name__ == '__main__':
 
     torch.backends.cudnn.benchmark = True
     print(train_validate(model, epochs, train_loader, val_loader, opt, lr_scheduler, dice_loss, device))
-    
-
-    

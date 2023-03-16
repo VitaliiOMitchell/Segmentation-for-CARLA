@@ -5,7 +5,7 @@ import cv2 as cv
 import torch
 from torch.utils.data import Dataset
 import albumentations as A
-import matplotlib.pyplot as plt
+
 
 class My_Dataset(Dataset):
     def __init__(self, x_path, y_path, x_data, y_data, transforms=True):
@@ -53,25 +53,7 @@ class My_Dataset(Dataset):
         masks = torch.as_tensor(masks, dtype=torch.float32)
         
         return img/255, masks
-    
-def get_test(x_path, y_path, x_test, y_test):
-    test_x = []
-    test_y = []
-    for img, seg_img in zip(x_test, y_test):
-        x = cv.imread(os.path.join(x_path, img))
-        x = cv.cvtColor(x, cv.COLOR_BGR2RGB)
-        x = cv.resize(x, (128, 128))
-        x = torch.as_tensor(x, dtype=torch.float32)
-        x = x.permute(-1, 0, 1)
-        y = cv.imread(os.path.join(y_path, seg_img))
-        y = cv.cvtColor(y, cv.COLOR_BGR2RGB)
-        y = cv.resize(y, (128, 128))
-        
-        test_x.append(x)
-        test_y.append(y[:,:,0])
-    return test_x, test_y
-        
-    
+
     
 def augment(x, y):
     aug = A.Compose([
@@ -90,7 +72,6 @@ def augment(x, y):
     return aug_img, aug_mask
 
 
-
 def make_datasets(x_path, y_path, test_only=False):
     x = os.listdir(x_path)
     y = os.listdir(y_path)
@@ -105,18 +86,3 @@ def make_datasets(x_path, y_path, test_only=False):
         return test_dataset
 
     return train_dataset, val_dataset
-
-
-'''if __name__ == '__main__':
-    x_path = 'F:/Python/Projects/Segmentation-for-Self-driving-cars/DATA/CameraRGB'
-    y_path = 'F:/Python/Projects/Segmentation-for-Self-driving-cars/DATA/CameraSeg'
-    data_t, data_v = make_datasets(x_path, y_path)
-
-    data = data_t.__getitem__(100)
-    #print(len(data))
-    plt.imshow(data[0][0])
-    plt.show()
-    plt.imshow(data[1][7])
-    plt.show()
-    #plt.imshow(masks[7])
-    #plt.show()'''

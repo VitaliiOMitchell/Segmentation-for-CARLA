@@ -1,5 +1,4 @@
 import torch
-#import numpy as np
 import torch.nn as nn
 import torch.nn.functional as F
 
@@ -57,15 +56,3 @@ def pixel_accuracy(pred, target, one_hot=False):
     correct = (preds==target).sum()
     return correct / len(target)
     
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-        
-        
