@@ -9,8 +9,7 @@ import matplotlib.pyplot as plt
 from tqdm import tqdm
 from loss_functions_and_metrics import Tversky_loss, pixel_accuracy
 
-    
-        
+
 def train_validate(model, epochs, train_loader, val_loader, opt, lr_scheduler, loss_func, device):
     train_losses = []
     train_average_losses = []
@@ -40,7 +39,6 @@ def train_validate(model, epochs, train_loader, val_loader, opt, lr_scheduler, l
             tver_loss_train.backward()
             opt.step()
             
-            
         training_loss /= len(train_loader)
         index_train /= len(train_loader)
         pixel_acc_train /= len(train_loader)
@@ -60,7 +58,6 @@ def train_validate(model, epochs, train_loader, val_loader, opt, lr_scheduler, l
                 validation_loss += tver_val_loss.item()
                 pixel_acc_val += pixel_val.item()       
                 
-        
         validation_loss /= len(val_loader)
         
         lr_scheduler.step(validation_loss)
@@ -104,7 +101,6 @@ def train_validate(model, epochs, train_loader, val_loader, opt, lr_scheduler, l
     plt.show()
     
         
-
 if __name__ == '__main__':
     # Device
     device = 'cuda'
