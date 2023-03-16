@@ -57,10 +57,7 @@ def pixel_accuracy(pred, target, one_hot=False):
     correct = (preds==target).sum()
     return correct / len(target)
     
-    
-'''if __name__ == '__main__':
-    pred = torch.randn(2, 4, 100, 100)
-    print(F.softmax(pred, dim=1))'''
+
     
     
     
