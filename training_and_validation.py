@@ -64,7 +64,7 @@ def train_validate(model, epochs, train_loader, val_loader, opt, lr_scheduler, l
         
         if len(val_losses) != 0:
             if validation_loss < np.min(val_losses):
-                torch.save(model.state_dict(), 'F:/Python/Projects/Segmentation-for-Self-driving-cars/model.pth')
+                torch.save(model.state_dict(), 'F:/Python/Projects/Segmentation-for-Self-driving-cars/model_2.pth')
                 print('Model saved...')
         
         index_val /= len(val_loader)
@@ -111,7 +111,7 @@ if __name__ == '__main__':
     
     # Hyper
     batch_size = 4
-    epochs = 15
+    epochs = 10
     lr = 0.1
     dice_loss = Tversky_loss()
     opt = optim.SGD(model.parameters(), lr=lr, momentum=0.9, weight_decay=1e-4)

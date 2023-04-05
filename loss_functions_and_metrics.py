@@ -17,7 +17,7 @@ class Dice_loss(nn.Module):
         intersection = (preds*target).sum()
         union = preds.sum() + target.sum()
         
-        dice_score = ((2 * intersection + smooth) / (union + smooth)) / batch
+        dice_score = ((2 * intersection + smooth) / (union + smooth))
         dice_loss = 1 - dice_score
         
         return dice_score, dice_loss
@@ -43,7 +43,21 @@ class Tversky_loss(nn.Module):
         tversky_loss = 1 - tversky_index
         
         return tversky_index, tversky_loss
+    
+class Focal_loss(nn.Module):
+    def __init__(self):
+        super().__init__()
         
+    def forward(self, preds, target, alpha=0.5, gamma=2):
+        preds = F.softmax(preds)
+        batch = preds.shape[0]
+        nll = nn.NLLLoss()
+        
+        softmax = F.softmax(preds, dim=1)
+        log_logits = torch.log(softmax)
+        fix_weights = (1 - softmax) ** self.gamma
+        logits = fix_weights * log_logits
+        return nll(logits, target)
         
 def pixel_accuracy(pred, target, one_hot=False):
     pred = F.softmax(pred)
